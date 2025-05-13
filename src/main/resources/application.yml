@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: authorization_service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/db-authorization}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:123456}
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: ${CHANGE_LOG:classpath:db/changelog/db.changelog-master.xml}
+    enabled: true
+    default-schema: public
+    contexts: dev
+    database-change-log-table: DATABASECHANGELOG
+    database-change-log-lock-table: DATABASECHANGELOGLOCK
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: ${SERVER_PORT:8082}
+  servlet:
+    context-path: /api
+    
+logging:
+  level:
+    root: ${LOGGING_LEVEL_ROOT:INFO}
+    com.graduationproject.authorization_service: ${LOGGING_LEVEL_AUTH_SERVICE:DEBUG}
+    org.springframework: ${LOGGING_LEVEL_SPRING:INFO}
+    org.hibernate: ${LOGGING_LEVEL_HIBERNATE:INFO}
