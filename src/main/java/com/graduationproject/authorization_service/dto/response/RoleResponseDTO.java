@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @Builder
 public class RoleResponseDTO {
-    private Integer id;
+    private Long id;
     private String name;
     private String displayName;
     private String description;

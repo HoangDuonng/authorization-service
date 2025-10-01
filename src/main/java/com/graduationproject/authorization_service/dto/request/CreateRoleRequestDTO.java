@@ -7,16 +7,16 @@ import java.util.Set;
 
 @Data
 public class CreateRoleRequestDTO {
-    @NotBlank(message = "Name is required")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "Role name must be in lowercase letters, numbers and underscores only")
+    @NotBlank(message = "Tên vai trò là bắt buộc")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "Tên vai trò chỉ được chứa chữ thường, số và dấu gạch dưới")
     private String name;
 
-    @NotBlank(message = "Display name is required")
+    @NotBlank(message = "Tên hiển thị là bắt buộc")
     private String displayName;
 
     private String description;
 
     private Boolean isSystem = false;
 
-    private Set<Integer> permissionIds;
+    private Set<Long> permissionIds;
 }
