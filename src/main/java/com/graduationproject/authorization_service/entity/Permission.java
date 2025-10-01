@@ -21,14 +21,15 @@ import java.util.Set;
 public class Permission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(name = "display_name", nullable = false)
     private String displayName;
 
+    @Column
     private String description;
 
     @Column(nullable = false)

@@ -7,11 +7,11 @@ import java.util.List;
 public interface PermissionService {
     List<PermissionResponseDTO> getAllPermissions();
 
-    PermissionResponseDTO getPermissionById(Integer id);
+    PermissionResponseDTO getPermissionById(Long id);
 
     PermissionResponseDTO createPermission(CreatePermissionRequestDTO request);
 
-    PermissionResponseDTO updatePermission(Integer id, CreatePermissionRequestDTO request);
+    PermissionResponseDTO updatePermission(Long id, CreatePermissionRequestDTO request);
 
-    void deletePermission(Integer id);
+    void deletePermission(Long id);
 }

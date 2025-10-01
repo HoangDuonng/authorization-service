@@ -23,7 +23,7 @@ public class PermissionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PermissionResponseDTO> getPermissionById(@PathVariable Integer id) {
+    public ResponseEntity<PermissionResponseDTO> getPermissionById(@PathVariable Long id) {
         return ResponseEntity.ok(permissionService.getPermissionById(id));
     }
 
@@ -35,13 +35,13 @@ public class PermissionController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PermissionResponseDTO> updatePermission(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @Valid @RequestBody CreatePermissionRequestDTO request) {
         return ResponseEntity.ok(permissionService.updatePermission(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePermission(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletePermission(@PathVariable Long id) {
         permissionService.deletePermission(id);
         return ResponseEntity.ok().build();
     }
