@@ -63,4 +63,25 @@ public class GlobalExceptionHandler {
         response.put("timestamp", LocalDateTime.now());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRuntimeException(RuntimeException ex) {
+        Map<String, Object> response = new HashMap<>();
+        String message = ex.getMessage();
+
+        // Kiểm tra các lỗi liên quan đến ràng buộc xóa role/permission
+        if (message.contains("Không thể xóa vai trò: vai trò đang được gán cho các người dùng:") ||
+                message.contains("Không thể xóa quyền: quyền đang được gán cho các vai trò:")) {
+            response.put("status", HttpStatus.CONFLICT.value());
+            response.put("message", message);
+            response.put("timestamp", LocalDateTime.now());
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
+
+        // Các RuntimeException khác
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("message", message);
+        response.put("timestamp", LocalDateTime.now());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

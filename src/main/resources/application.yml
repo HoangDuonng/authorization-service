@@ -24,10 +24,52 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 10000
+          multiplier: 2.0
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+
+rabbitmq:
+  queue:
+    user-created-authorization: user-created-authorization-queue
+    auth-login: auth-login-queue
+    auth-login-response: auth-login-response-queue
+  exchange:
+    user-events: user-events-exchange
+    auth-events: auth-events-exchange
+  routing-key:
+    user-created-authorization: user.created.authorization
+    auth-login: auth.login
+    auth-login-response: auth.login.response
+
+jwt:
+  secret: ${JWT_SECRET:7mCfe6wr7rOBhY6S3vrWyR8dBXFy9iTOmbjlREl0yxASqKgpzKfIl0CGpGjMVuL/O++QZGIBwGQNzyphuN8yyqIbacdY+7n+6KZTY3xQdh16C8Kdzjt01mg6tKywGgaNTG1nLUhQVUb/INOIkqMIk4lVXyTbnGU9RFWCxYvQbHN2/BcaOUQm/SM0Fb6nk96JQZoavlrUqCGyEyoCXXTATjW7bnkEbp5mP3w9p+MvRED5nkGMC7LvMwfag8rOFvTCPcsqjgE+Y/MLfqTJprQpn2nbcMAj2AQAUbtPIY1UXe37IVA2qy/fzs5urnspX37fb6W7bnhIBn4hA6zudvQ==}
+  expiration: ${JWT_EXPIRATION:86400000}
+  refresh-token:
+    expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}
+
 server:
   port: ${SERVER_PORT:8082}
   servlet:
     context-path: /api
+
+user-service:
+  url: ${USER_SERVICE_URL:http://localhost:8080}
+  service-token: ${USER_SERVICE_TOKEN:service-auth-2024-secret-key}
     
 logging:
   level:
@@ -35,3 +77,31 @@ logging:
     com.graduationproject.authorization_service: ${LOGGING_LEVEL_AUTH_SERVICE:DEBUG}
     org.springframework: ${LOGGING_LEVEL_SPRING:INFO}
     org.hibernate: ${LOGGING_LEVEL_HIBERNATE:INFO}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  liquibase:
+    parameters:
+      secureParsing: false
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  liquibase:
+    parameters:
+      secureParsing: true
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false

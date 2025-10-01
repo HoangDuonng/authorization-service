@@ -7,8 +7,14 @@ import java.util.List;
 
 public interface RoleService {
     List<RoleResponseDTO> getAllRoles();
-    RoleResponseDTO getRoleById(Integer id);
+
+    RoleResponseDTO getRoleById(Long id);
+
     RoleResponseDTO createRole(CreateRoleRequestDTO request);
-    RoleResponseDTO updateRole(Integer id, CreateRoleRequestDTO request);
-    void deleteRole(Integer id);
+
+    RoleResponseDTO updateRole(Long id, CreateRoleRequestDTO request);
+
+    void deleteRole(Long id);
+
+    List<RoleResponseDTO> getRolesByUserId(Long userId);
 }

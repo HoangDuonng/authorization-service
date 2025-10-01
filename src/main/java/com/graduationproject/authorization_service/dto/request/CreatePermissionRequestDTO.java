@@ -6,20 +6,20 @@ import lombok.Data;
 
 @Data
 public class CreatePermissionRequestDTO {
-    @NotBlank(message = "Name is required")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "Name must contain only lowercase letters, numbers and underscores")
+    @NotBlank(message = "Tên quyền là bắt buộc")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "Tên quyền chỉ được chứa chữ thường, số và dấu gạch dưới")
     private String name;
 
-    @NotBlank(message = "Display name is required")
+    @NotBlank(message = "Tên hiển thị là bắt buộc")
     private String displayName;
 
     private String description;
 
-    @NotBlank(message = "Module is required")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "Module must contain only lowercase letters, numbers and underscores")
+    @NotBlank(message = "Module là bắt buộc")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "Module chỉ được chứa chữ thường, số và dấu gạch dưới")
     private String module;
 
-    @NotBlank(message = "Action is required")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "Action must contain only lowercase letters, numbers and underscores")
+    @NotBlank(message = "Hành động là bắt buộc")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "Hành động chỉ được chứa chữ thường, số và dấu gạch dưới")
     private String action;
 }
